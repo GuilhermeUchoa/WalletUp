@@ -1,0 +1,31 @@
+/* indice header da tabela que acompanha a pagina */
+table thead tr {
+
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+}
+
+/* indice foot da tabela que acompanha a pagina */
+table tfoot tr {
+
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+}
+
+/* mexendo no alinhamento e estetica da tabela */
+td,
+th {
+    text-align: center;
+    align-content: center;
+  
+}
+
+
+.fileupload {
+    
+    width: 440px;
+    padding: 30px;
+}

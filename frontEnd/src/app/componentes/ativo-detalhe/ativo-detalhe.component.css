@@ -1,0 +1,23 @@
+* {
+    margin: auto 5px;
+    font-size: large;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    left: 15%;
+}
+
+.example-card{
+    align-items: center;
+    
+    
+}
+
+button {
+    margin-right: 8px;
+  }
+
+
+
