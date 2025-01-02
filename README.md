@@ -3,8 +3,7 @@ npm# Bem vindo ao Sistema de rebalanceamento de carteira FinanceApp
  - Esse sistema foi desenvolvido com a intenção de facilitar meus aportes em minha carteira de investimentos, sempre tive a dificuldade de calcular quanto comprar de cada cota, sendo acão, Fii, BDR ou Renda Fixa, para respeitar meu balanceamento, então desenvolvi este projeto inicialmente com uma tabela em excel e depois como hobbie e desafio utilizando angular e django.
 
 
- ![Home](https://github.com/GuilhermeUchoa/FinanceAppAngular/frontEnd/blob/main/src/assets/Home.png)
-
+ ![Home](https://github.com/GuilhermeUchoa/WalletUp/blob/main/frontEnd/src/assets/Home.png)
 
  # Para instalar este projeto eu seu PC:
 
@@ -52,12 +51,19 @@ npm# Bem vindo ao Sistema de rebalanceamento de carteira FinanceApp
 
 [x] - Ajustar o banco de dados
 
-[ ] - Ajustar dashboard detalhe
 
 [x] - Ajustar algoritmo que coloca ativo na carteira
 
-[ ] - Ajustar Banco de dados com uma central, onde os clientes apenas copiam os valores atualizados, sem exceder a requisição a Api
+[x] - Ajustar Banco de dados com uma central, onde os clientes apenas copiam os valores atualizados, sem exceder a requisição a Api
+
+[x] - Django djoser vai ser mais facil implementar a parte de backend
 
 [ ] - Refatorar e refatorar
 
-[ ] - Django djoser vai ser mais facil implementar a parte de backend
+[ ] - Criar registro de novas contas
+
+[ ] - Criar recuperacao de senha
+
+[ ] - Ajustar as informacoes de DY e valuation em geral
+
+[ ] - Ajustar dashboard detalhe
