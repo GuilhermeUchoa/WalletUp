@@ -14,7 +14,7 @@ export class AuthServiceService {
   constructor(private http: HttpClient) { }
 
   // Funcao para criar nova conta
-  register(email: string, username: string, password: string): Observable<any> {
+  register(username: string, email: string, password: string): Observable<any> {
     let body = { email, username, password }
     return this.http.post(`${this.authUrl}/users/`, body)
   }

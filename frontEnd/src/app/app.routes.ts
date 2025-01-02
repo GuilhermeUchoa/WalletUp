@@ -3,9 +3,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { PortfolioDetalheComponent } from './pages/portfolio-detalhe/portfolio-detalhe.component';
 import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
+
 import { authGuard } from './auth.guard';
 import { LogoutComponent } from './pages/logout/logout.component';
+import { CadastroComponent } from './pages/cadastro/cadastro.component';
 
 
 export const routes: Routes = [
@@ -17,7 +18,7 @@ export const routes: Routes = [
 
     { path: 'login', component: LoginComponent },
     { path: 'logout', component: LogoutComponent },
-    { path: 'register', component: RegisterComponent },
+    { path: 'cadastro', component: CadastroComponent },
 
 
 ];

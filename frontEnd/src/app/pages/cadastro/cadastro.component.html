@@ -1,12 +1,17 @@
 <div class="d-flex justify-content-center align-items-center" id="loginFormulario">
     <div class="card p-3">
-
-        <form action="" method="post" (ngSubmit)="login()">
+        <h4>Casdastro</h4>
+        <hr>
+        <form action="" method="post" (ngSubmit)="cadastro()">
             <div class="form-group">
                 <label for="email">Usuario</label>
                 <input type="text" id="usuario" name="usuario" class="form-control" [(ngModel)]="usuario"> 
                 <!-- Quando usar ngModel nao se esqueca de colocar o name nas tags do html -->
-                
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" [(ngModel)]="email"> 
             </div>
 
             <div class="form-group">
@@ -14,18 +19,21 @@
                 <input type="password" id="senha" name="senha" class="form-control" [(ngModel)]="senha">
             </div>
 
+            <div class="form-group">
+                <label for="senha2">Digite a senha novamente</label>
+                <input type="password" id="senha2" name="senha2" class="form-control" [(ngModel)]="senha2">
+            </div>
+
             {{alerta}}
 
             <br>
             <div class="form-group">
-                <button class="btn btn-primary" type="submit" >Entrar</button>
+                <button class="btn btn-primary" type="submit" >Cadastrar</button>
             </div>
 
         </form>
         <br>
-        <div class="form-group">
-            <button class="btn btn-primary" type="submit" [routerLink]="['/cadastro']">Cadastrar</button>
-        </div>
+
 
     </div>
 </div>

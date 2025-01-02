@@ -12,6 +12,7 @@ import warnings
 warnings.simplefilter("ignore")
 
 
+
 class AtivosViewSet(viewsets.ModelViewSet):
 
     queryset = AtivosModels.objects.all()
@@ -51,3 +52,5 @@ def upload_file(request):
         return JsonResponse({'message': 'File uploaded successfully'})
     else:
         return JsonResponse({'error': 'No file found in request'}, status=400)
+
+

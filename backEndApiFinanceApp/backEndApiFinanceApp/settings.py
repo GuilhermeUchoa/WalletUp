@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'djoser',
     'django_filters',
     'corsheaders',
+    'django_celery_beat',
     'portfolioAPI',
 ]
 
@@ -161,4 +162,15 @@ CORS_ORIGIN_WHITELIST = [
 # file uload parameters
 MEDIA_URL =  '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# Configuração do Celery para usar RabbitMQ
+CELERY_BROKER_URL = 'pyamqp://guest:guest@localhost//'
+CELERY_RESULT_BACKEND = 'rpc://'
+
+# Opcional: Defina o tempo de expiração e o número de tentativas de reexecução das tarefas
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'America/Sao_Paulo'
 

@@ -22,7 +22,9 @@ npm# Bem vindo ao Sistema de rebalanceamento de carteira FinanceApp
  - ng start (para instalar os repositorios node_modules)
  - ng serve para iniciar o projeto (porta:4200)
 
+# Rodar atualizacao de cotacao
 
+estou usando o celery
 
 
 # Metas
@@ -60,10 +62,12 @@ npm# Bem vindo ao Sistema de rebalanceamento de carteira FinanceApp
 
 [ ] - Refatorar e refatorar
 
-[ ] - Criar registro de novas contas
+[x] - Criar registro de novas contas
 
 [ ] - Criar recuperacao de senha
 
 [ ] - Ajustar as informacoes de DY e valuation em geral
 
-[ ] - Ajustar dashboard detalhe
+[x] - Ajustar dashboard detalhe
+
+[ ] - Colocar o celery para atualizar as cotacoes

@@ -1,11 +1,19 @@
 from celery import shared_task
-from .models import AtivosModels, PortfolioModels
 import yfinance as yf
-
-
+from .models import AtivosModels
 
 @shared_task()
-def atualizar_ativos(bind=True):
+def atualizar_ativos():
+    """
+    Atualiza os pre os dos ativos cadastrados no banco de dados
+
+    Percorre todos os ativos cadastrados no banco de dados, atualiza a cota o
+    de cada um com base nos dados da Yahoo! Finance e salva no banco de dados
+    novamente.
+
+    :return: uma string com a mensagem de sucesso
+    """
+
     ativos = AtivosModels.objects.all()
     for ativo in ativos:
         try:
@@ -16,4 +24,3 @@ def atualizar_ativos(bind=True):
         except:
             pass
     return "Ativos atualizados com sucesso"
-
