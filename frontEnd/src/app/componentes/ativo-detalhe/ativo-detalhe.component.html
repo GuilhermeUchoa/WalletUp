@@ -3,7 +3,7 @@
   <mat-grid-list cols="5" rowspan="10" rowHeight="400px">
 
     <!-- Informacoes basicas -->
-    <mat-grid-tile colspan="3" rowspan="1">
+    <mat-grid-tile colspan="2" rowspan="1">
 
       <mat-card class="example-card" appearance="outlined">
 
@@ -27,30 +27,59 @@
 
     </mat-grid-tile>
 
-    <!-- Valuation -->
+    <!-- Metas -->
     <mat-grid-tile colspan="1" rowspan="1">
 
       <mat-card class="example-card" appearance="outlined" style="position: relative; top: 40px;">
 
         <mat-card-content>
+          <div class="input-group input-group-sm mb-3" style="position: relative; top: 8px;">
+            Meta Dy :
+            <input type="number" class="form-control" id="meta" aria-label="Amount (to the nearest dollar)"
+              [(ngModel)]="metaDividendYield" (change)="atualizarMetaDividendYield($event,ativo.id)" name="meta"
+              step="0.5" style="text-align: center; width: 75px; ">
+            <span class="input-group-text">%</span>
+          </div>
+        </mat-card-content>
+
+      </mat-card>
+
+    </mat-grid-tile>
+
+    <!-- Valuation -->
+    <mat-grid-tile colspan="2" rowspan="1">
+
+      <mat-card class="example-card" appearance="outlined" style="position: relative; top: 40px;">
+
+        <mat-card-content>
           <p>Meta: {{ativo.meta}}%</p>
-          <p>Dividend Yield: {{ativo.dy}}%</p>
+          <p>Dividend Yield: {{ativo.dy|percent:'0.0-2'}}</p>
           @if(ativo.status == 'comprar'){
           <p style="color: green;">Status: {{ativo.status}}</p>
           }
           @else{
           <p>Status: {{ativo.status}}</p>
           }
-          <p>PrecoMedio: {{ativo.precoMedio}}</p>
-          <p>ValuationDy: {{ativo.valuationDy|currency:'BRL'}}</p>
+          <!-- preco medio -->
+          <div class="input-group input-group-sm mb-3" style="position: relative; top: 8px;">
+            preco médio :
+            <input type="number" class="form-control" id="meta" aria-label="Amount (to the nearest dollar)"
+             value="{{ativo.precoMedio}}" (change)="atualizarPrecoMedio($event,ativo.id)" name="meta" step="0.5"
+              style="text-align: center; width: 75px; ">
+            <span class="input-group-text">R$</span>
+          </div>
+
+          <p>ValuationDy: {{(ativo.dy*ativo.cotacao/(metaDividendYield/100))|currency:'BRL'}}</p>
           <p>ValuationDFC: {{ativo.valuationDFC|currency:'BRL'}}</p>
+          @if (ativo.tipo == 'Fundo de Investimento') {
           <p>Score qualitativo {{ativo.scoreQualitativo|number:'0.0-2'}}</p>
+          }
         </mat-card-content>
 
       </mat-card>
 
     </mat-grid-tile>
-    
+
   </mat-grid-list>
   <br>
   <!-- Aqui vai ficar a tabelaQualitativa filha -->

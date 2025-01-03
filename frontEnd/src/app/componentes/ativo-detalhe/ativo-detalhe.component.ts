@@ -37,6 +37,7 @@ import { TabelaQualitativaComponent } from './tabela-qualitativa/tabela-qualitat
     MatButtonModule,
     MatCheckboxModule,
     TabelaQualitativaComponent,
+    FormsModule
 
   ],
   templateUrl: './ativo-detalhe.component.html',
@@ -46,6 +47,8 @@ export class AtivoDetalheComponent {
 
   ativoId: string = ''
   ativo: any = []
+  metaDividendYield: number = 0
+ 
 
   constructor(
     private _PortfolioService: PortfolioService,
@@ -61,6 +64,8 @@ export class AtivoDetalheComponent {
 
       this._PortfolioService.getAtivo(ativoId).subscribe((data) => {
         this.ativo = data
+        this.metaDividendYield = data.metaDividendYield 
+        
       })
     })
   }
@@ -72,6 +77,22 @@ export class AtivoDetalheComponent {
     })
 
     this.openDialog('0ms', '0ms')
+  }
+
+  atualizarMetaDividendYield(event: any, id: any){
+    this._PortfolioService.getAtivo(id).subscribe((data) => {
+      let portfolio = data
+      portfolio.metaDividendYield = event.target.value
+      this._PortfolioService.atualizarAtivo(id, portfolio).subscribe()
+    })
+  }
+
+  atualizarPrecoMedio(event: any, id: any){
+    this._PortfolioService.getAtivo(id).subscribe((data) => {
+      let portfolio = data
+      portfolio.precoMedio = event.target.value
+      this._PortfolioService.atualizarAtivo(id, portfolio).subscribe()
+    })
   }
 
 

@@ -8,7 +8,6 @@ from rest_framework import viewsets, filters
 from rest_framework.decorators import api_view
 import warnings
 
-
 warnings.simplefilter("ignore")
 
 

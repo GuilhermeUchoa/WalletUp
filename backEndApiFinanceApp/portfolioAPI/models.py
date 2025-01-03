@@ -18,14 +18,15 @@ class AtivosModels(models.Model):  # Ativos BASE
     ativoPrincipal = models.CharField(
         max_length=50, blank=False, null=False, primary_key=True)
     cotacao = models.FloatField(blank=False, null=False, default=0)
-    tipo = models.CharField(blank=False, null=False,
-                            choices=TIPO, max_length=250, default="Outros")
+    tipo = models.CharField(blank=False, null=False, choices=TIPO, max_length=250, default="Outros")
+    dy = models.FloatField(blank=True, null=True)
     atualizacao = models.DateTimeField(auto_now=True)
     
-    def save(self, *args, **kwargs):
-        if(self.tipo != "Tesouro Direto"):
-            self.cotacao = round(yf.download(f"{self.ativoPrincipal}.SA").iloc[-1]['Close'],2)
-        return super().save()
+    # A task ja esta salvando toda vez que ela roda não é necessaria essa função, somente quando adicionar novo ativo, entao preciso pensar em algo
+    # def save(self, *args, **kwargs):
+    #     if(self.tipo != "Tesouro Direto"):
+    #         self.cotacao = round(yf.download(f"{self.ativoPrincipal}.SA").iloc[-1]['Close'],2)
+    #     return super().save()
 
     def __str__(self):
         return f'{self.ativoPrincipal}'
@@ -59,8 +60,11 @@ class PortfolioModels(models.Model):
     # Porcentagens
     porcentagem = models.FloatField(blank=True, null=True)
     variacaoAnual = models.FloatField(blank=True, null=True, editable=False)
+    dy = models.FloatField(blank=True, null=True, editable=False)
+    
+    # metas
     meta = models.FloatField(blank=True, null=True)
-    dy = models.FloatField(blank=True, null=True)
+    metaDividendYield = models.FloatField(blank=True, null=True)
 
     # Classificação
     status = models.CharField(
@@ -92,8 +96,12 @@ class PortfolioModels(models.Model):
 
     # Formulario
     scoreQualitativo = models.FloatField(blank=True, null=True, default=0)
+    
+    # Calculos
+    def valuationDy(self):
+        pass
 
-    #
+    # Cria o score qualitativo
     def calculoScoreQualitativo(self):
         soma = (self.question0 + self.question1 + self.question2 + self.question3 + self.question4 + self.question5 + self.question6 +
                 self.question7 + self.question8 + self.question9 + self.question10 + self.question11)
@@ -112,6 +120,7 @@ class PortfolioModels(models.Model):
         self.scoreQualitativo = self.calculoScoreQualitativo()  # Antes de salvar, calcula o score qualitativo
         self.cotacao = self.ativo.cotacao # ativo é um objeto do tipo AtivosModels
         self.tipo = self.ativo.tipo
+        self.dy = self.ativo.dy
         return super().save()
     
     

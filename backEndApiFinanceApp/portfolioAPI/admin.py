@@ -14,7 +14,7 @@ class AtivosAdmin(admin.ModelAdmin):
 @admin.register(PortfolioModels)
 class PortfolioAdmin(admin.ModelAdmin):
    
-    list_display = ['id', 'usuario', 'ativo', 'cotacao', 'quantidade', 'porcentagem', 'meta', 'dy', 'status', 'tipo', 'aporte', 'precoMedio', 'valuationDy', 'valuationDFC','scoreQualitativo']
+    list_display = ['id', 'usuario', 'ativo', 'cotacao', 'quantidade', 'dy','porcentagem', 'meta', 'status', 'tipo', 'aporte', 'precoMedio', 'valuationDy', 'valuationDFC','scoreQualitativo']
     list_filter = ["usuario","tipo","status","ativo"]
     list_editable = ['meta', 'status'] 
     search_fields = ["ativo", "status", "tipo"]

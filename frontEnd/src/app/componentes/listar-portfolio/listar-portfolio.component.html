@@ -50,28 +50,34 @@
                     <!-- Button trigger modal -->
                     <button id="buttonAtivo" *ngIf=" item.status == 'comprar'" type="button" class="btn btn-primary"
                         [routerLink]="['/portfolio/'+item.id]">
-                        {{(item.ativo | uppercase | slice:0:8)}}
+                        {{(item.ativo | uppercase )}}
                     </button>
                     <button id="buttonAtivo" *ngIf=" item.status == 'aguardar'" type="button" class="btn btn-warning"
                         [routerLink]="['/portfolio/'+item.id]">
-                        {{(item.ativo | uppercase | slice:0:8)}}
+                        {{(item.ativo | uppercase )}}
                     </button>
                     <button id="buttonAtivo" *ngIf=" item.status == ''" type="button" class="btn btn-success"
                         [routerLink]="['/portfolio/'+item.id]">
-                        {{(item.ativo | uppercase | slice:0:8)}}
+                        {{(item.ativo | uppercase )}}
                     </button>
                     <button id="buttonAtivo" *ngIf=" item.status == 'vender'" type="button" class="btn btn-danger"
                         [routerLink]="['/portfolio/'+item.id]">
-                        {{(item.ativo | uppercase | slice:0:8)}}
+                        {{(item.ativo | uppercase )}}
                     </button>
 
                 </td>
 
                 <!-- Cotacao -->
                 <td>{{item.cotacao|currency:'BRL'}}</td>
-
+               
                 <!-- DY -->
-                <td [style]="item.dy > 6 ? 'color:lightgreen':''">{{item.dy}}%</td>
+                 @if(item.tipo == 'Fundo de Investimento'){
+                    <td [style]="(item.dy*100) > 9 ? 'color:lightgreen':''">{{item.dy|percent:"1.0-2"}}</td>
+                 }
+                 @else(){
+
+                     <td [style]="(item.dy*100) > 6 ? 'color:lightgreen':''">{{item.dy|percent:"1.0-2"}}</td>
+                 }
 
                 <!-- Quantidade -->
                 <td>{{item.quantidade}}</td>
