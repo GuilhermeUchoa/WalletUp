@@ -49,6 +49,20 @@ export class ListarPortfolioComponent {
   ngOnInit(): void {
     //Init
     this.listarPortfolio()
+
+    // Forma de atualizar de forma reativa os valores de cotacao
+    setInterval(() => {
+      this._PortfolioService.listarPortfolio().subscribe((data) => {
+        data.forEach((ativo) => {
+          const a = this.portfolio.find((data) => data.id === ativo.id)
+          if(a){
+            a.cotacao = ativo.cotacao
+          }
+        })
+         
+      })
+
+    },1005*60*15);
   }
 
   listarPortfolio(): void {

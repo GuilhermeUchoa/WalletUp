@@ -1,5 +1,8 @@
 <div class="container">
-
+    <p>
+        <img src="../../../../assets/location.png"  width="25px" title="A cotacao esta abaixo do preço medio">
+        <span style="font-weight: 600;" >Cotação a baixo do preco medio</span>
+    </p>
     <!-- Search -->
     <div style="text-align: center;">
         <label for="searchTipo" style="padding: 5px;">Buscar</label>
@@ -11,13 +14,14 @@
 
     <!-- Tabela -->
     <table class="table table-sm ">
-
+        
+                        
         <thead>
             <tr>
 
                 <th scope="col">Ativo</th>
                 <th scope="col">Cotacao</th>
-
+                <th scope="col">Preço Médio</th>
                 <th scope="col">Dy</th>
                 <th scope="col">Quantidade</th>
                 <th scope="col">Valor</th>
@@ -68,16 +72,30 @@
                 </td>
 
                 <!-- Cotacao -->
-                <td>{{item.cotacao|currency:'BRL'}}</td>
-               
-                <!-- DY -->
-                 @if(item.tipo == 'Fundo de Investimento'){
-                    <td [style]="(item.dy*100) > 9 ? 'color:lightgreen':''">{{item.dy|percent:"1.0-2"}}</td>
-                 }
-                 @else(){
+                <td style="font-weight: 500;">{{item.cotacao|currency:'BRL'}}</td>
 
-                     <td [style]="(item.dy*100) > 6 ? 'color:lightgreen':''">{{item.dy|percent:"1.0-2"}}</td>
-                 }
+                <!-- Preco Medio -->
+                <td>
+                   
+                    <div class="input-group input-group-sm mb-3" style="position: relative; top: 8px;">
+                        <input type="number" class="form-control" id="meta" aria-label="Amount (to the nearest dollar)"
+                            value="{{item.precoMedio}}" (change)="precoMedio($event,item.id)" name="meta" step="0.5"
+                            style="text-align: center; width: 75px; "
+                            [style]="item.precoMedio > item.cotacao ? 'color:orange':''"
+                            >
+                            
+                       
+                    </div>
+                </td>
+
+                <!-- DY -->
+                @if(item.tipo == 'Fundo de Investimento'){
+                <td [style]="(item.dy*100) > item.metaDividendYield ? 'color:lightgreen':''">{{item.dy|percent:"1.0-2"}}</td>
+                }
+                @else(){
+
+                <td [style]="(item.dy*100) > item.metaDividendYield ? 'color:lightgreen':''">{{item.dy|percent:"1.0-2"}}</td>
+                }
 
                 <!-- Quantidade -->
                 <td>{{item.quantidade}}</td>
@@ -88,7 +106,7 @@
 
                 <!-- Valor Restante para Meta -->
                 <td>{{((item.meta/100)-item.porcentagem) * valorTotalCarteira|currency:'BRL'}}</td>
-                 
+
 
                 <!-- porcentagem -->
                 @if (searchTermAtivo == true) {
@@ -138,7 +156,7 @@
                 </td>
 
                 <!-- Tipo -->
-                <td>{{item.tipo|uppercase}}</td>
+                <td>{{item.tipo}}</td>
 
                 <!-- Aporte -->
                 <td class="aporte">{{item.aporte|currency:'BRL'}}</td>
@@ -155,9 +173,9 @@
 
                 <!-- Sinal para comprar abaixo do preco medio -->
                 <td>
-                    @if(item.cotacao < item.valuationDFC && (item.porcentagem*100) < item.meta){ <img
+                    @if(item.cotacao < item.precoMedio){ <img
                         src="../../../../assets/location.png" alt="" srcset="" width="20px"
-                        title="A cotacao esta abaixo do preço valuation e a meta não foi batida, excelente momento para compra">
+                        title="A cotacao esta abaixo do preço medio">
                         }
                 </td>
 
@@ -172,14 +190,15 @@
                 <th scope="col">Ativo</th>
 
                 <th scope="col"></th>
+                <th scope="col"></th>
 
                 <th scope="col"></th>
-                
+
 
                 <th scope="col">{{quantidadeTotalCarteira}}</th>
                 <th scope="col">{{valorTotalCarteira|currency:'BRL'}}</th>
                 <th scope="col"></th>
-         
+
                 <th scope="col">{{porcentagemTotalCarteira|percent:'1.0-2'}}</th>
 
 
