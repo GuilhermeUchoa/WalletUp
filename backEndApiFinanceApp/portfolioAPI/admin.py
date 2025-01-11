@@ -5,7 +5,8 @@ from .models import PortfolioModels, AtivosModels
 @admin.register(AtivosModels)
 class AtivosAdmin(admin.ModelAdmin):
 
-    list_display = [i.name for i in AtivosModels._meta.get_fields()][1:]
+    
+    list_display = ['ativoPrincipal', 'cotacao', 'tipo', 'dy', 'pl', 'enterpriseValue', 'freeCashflow', 'revenueGrowth', 'debtToEquity', 'earningsQuarterlyGrowth', 'twoHundredDayAverage', 'fiftyTwoWeekLow', 'fiftyTwoWeekHigh', 'atualizacao']
     list_editable = ["tipo"]
     list_filter = ["tipo", "atualizacao"]
     search_fields = ["ativo", "tipo"]

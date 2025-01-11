@@ -19,8 +19,21 @@ class AtivosModels(models.Model):  # Ativos BASE
         max_length=50, blank=False, null=False, primary_key=True)
     cotacao = models.FloatField(blank=False, null=False, default=0)
     tipo = models.CharField(blank=False, null=False, choices=TIPO, max_length=250, default="Outros")
+
+    # Dados Financeiros
     dy = models.FloatField(blank=True, null=True)
-    atualizacao = models.DateTimeField(auto_now=True)
+    pl = models.FloatField(blank=True, null=True)
+    enterpriseValue = models.FloatField(blank=True, null=True) # Valor total da empresa
+    freeCashflow = models.FloatField(blank=True, null=True)# Fluxo de caixa livre
+    revenueGrowth = models.FloatField(blank=True, null=True) # Crescimento da receita
+    debtToEquity = models.FloatField(blank=True, null=True) # Relação entre dívida e patrimônio líquido
+    earningsQuarterlyGrowth = models.FloatField(blank=True, null=True)  # Crescimento de lucros trimestrais
+    twoHundredDayAverage = models.FloatField(blank=True, null=True) # Média dos preços dos últimos 200 dias
+    fiftyTwoWeekLow = models.FloatField(blank=True, null=True) # Preço mais baixo nos últimos 52 semanas
+    fiftyTwoWeekHigh = models.FloatField(blank=True, null=True) # Preço mais alto nos últimos 52 semanas
+    longBusinessSummary = models.TextField(blank=True, null=True, default="") # Resumo das atividades da empresa
+    
+    atualizacao = models.DateTimeField(auto_now=True) 
     
     # A task ja esta salvando toda vez que ela roda não é necessaria essa função, somente quando adicionar novo ativo, entao preciso pensar em algo
     # def save(self, *args, **kwargs):
@@ -60,7 +73,19 @@ class PortfolioModels(models.Model):
     # Porcentagens
     porcentagem = models.FloatField(blank=True, null=True)
     variacaoAnual = models.FloatField(blank=True, null=True, editable=False)
-    dy = models.FloatField(blank=True, null=True, editable=False)
+
+    # Dados Financeiros
+    dy = models.FloatField(blank=True, null=True) # Dividend yield
+    pl = models.FloatField(blank=True, null=True) # Preço/lucro
+    enterpriseValue = models.FloatField(blank=True, null=True) # Valor total da empresa
+    freeCashflow = models.FloatField(blank=True, null=True)# Fluxo de caixa livre
+    revenueGrowth = models.FloatField(blank=True, null=True) # Crescimento da receita
+    debtToEquity = models.FloatField(blank=True, null=True) # Relação entre dívida e patrimônio líquido
+    earningsQuarterlyGrowth = models.FloatField(blank=True, null=True)  # Crescimento de lucros trimestrais
+    twoHundredDayAverage = models.FloatField(blank=True, null=True) # Média dos preços dos últimos 200 dias
+    fiftyTwoWeekLow = models.FloatField(blank=True, null=True) # Preço mais baixo nos últimos 52 semanas
+    fiftyTwoWeekHigh = models.FloatField(blank=True, null=True) # Preço mais alto nos últimos 52 semanas
+    longBusinessSummary = models.TextField(blank=True, null=True, default="") # Resumo das atividades da empresa
     
     # metas
     meta = models.FloatField(blank=True, null=True)
@@ -117,10 +142,25 @@ class PortfolioModels(models.Model):
         ]
 
     def save(self, *args, **kwargs):
+        
+        #Quando eu salvo um unico portfolio, eu atualizo unicamente este portifolio
         self.scoreQualitativo = self.calculoScoreQualitativo()  # Antes de salvar, calcula o score qualitativo
         self.cotacao = self.ativo.cotacao # ativo é um objeto do tipo AtivosModels
         self.tipo = self.ativo.tipo
+        self.longBusinessSummary = self.ativo.longBusinessSummary
         self.dy = self.ativo.dy
+        self.pl = self.ativo.pl
+        self.enterpriseValue = self.ativo.enterpriseValue
+        self.freeCashflow = self.ativo.freeCashflow
+        self.revenueGrowth = self.ativo.revenueGrowth
+        self.debtToEquity = self.ativo.debtToEquity
+        self.earningsQuarterlyGrowth = self.ativo.earningsQuarterlyGrowth
+        self.twoHundredDayAverage = self.ativo.twoHundredDayAverage
+        self.fiftyTwoWeekLow = self.ativo.fiftyTwoWeekLow
+        self.fiftyTwoWeekHigh = self.ativo.fiftyTwoWeekHigh
+
+
+
         return super().save()
     
     
@@ -137,9 +177,21 @@ def atualizar_portfolioModels_com_ativosModels(sender, instance, **kwargs):
     # Obtém os portfolios que têm esse ativo
     portfolios = PortfolioModels.objects.filter(ativo=instance)
     for portfolio in portfolios:
-        # Atualiza a cotação do ativo para os portfolios relacionados
+        # Atualiza os dados de todos os ativos da carteira
         portfolio.cotacao = instance.cotacao
         portfolio.tipo = instance.tipo
+        portfolio.longBusinessSummary = instance.longBusinessSummary
+        portfolio.dy = instance.dy
+        portfolio.pl = instance.pl
+        portfolio.enterpriseValue = instance.enterpriseValue
+        portfolio.freeCashflow = instance.freeCashflow
+        portfolio.revenueGrowth = instance.revenueGrowth
+        portfolio.debtToEquity = instance.debtToEquity
+        portfolio.earningsQuarterlyGrowth = instance.earningsQuarterlyGrowth
+        portfolio.twoHundredDayAverage = instance.twoHundredDayAverage
+        portfolio.fiftyTwoWeekLow = instance.fiftyTwoWeekLow
+        portfolio.fiftyTwoWeekHigh = instance.fiftyTwoWeekHigh
+
         portfolio.save()
 
 

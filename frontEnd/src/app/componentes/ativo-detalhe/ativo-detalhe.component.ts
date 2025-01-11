@@ -65,6 +65,7 @@ export class AtivoDetalheComponent {
       this._PortfolioService.getAtivo(ativoId).subscribe((data) => {
         this.ativo = data
         this.metaDividendYield = data.metaDividendYield 
+        console.log(this.ativo)
         
       })
     })

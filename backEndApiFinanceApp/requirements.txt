@@ -154,3 +154,5 @@ webencodings==0.5.1
 websocket-client==1.8.0
 yfinance==0.2.40
 zipp==3.21.0
+celery
+django_celery_beat

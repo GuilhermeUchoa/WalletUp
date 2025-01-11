@@ -74,6 +74,7 @@ export class ListarPortfolioComponent {
         return 0;
       });
 
+
       //Quantidade Total
       this.quantidadeTotal()
       //valor de cada ativo

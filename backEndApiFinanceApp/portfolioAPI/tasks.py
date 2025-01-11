@@ -18,13 +18,26 @@ def atualizar_ativos():
     ativos = AtivosModels.objects.all()
     for ativo in ativos:
         try:
+
             ticker = yf.Ticker(f"{ativo.ativoPrincipal}.SA")
-            cotacao = ticker.history(period="1d")["Close"].iloc[-1]
-            dividendYield = ticker.info['dividendYield']
-            ativo.dy = dividendYield
-            ativo.cotacao = round(cotacao, 2)
+
+            ativo.cotacao = round(ticker.history(period="1d")["Close"].iloc[-1], 2)
+            ativo.longBusinessSummary = ticker.info['longBusinessSummary']
+            ativo.dy = ticker.info['dividendYield']
+            ativo.pl = ticker.info['trailingPE']
+            ativo.enterpriseValue = ticker.info['enterpriseValue']
+            ativo.freeCashflow = ticker.info['freeCashflow']
+            ativo.revenueGrowth = ticker.info['revenueGrowth']
+            ativo.debtToEquity = ticker.info['debtToEquity']
+            ativo.earningsQuarterlyGrowth = ticker.info['earningsQuarterlyGrowth']
+            ativo.twoHundredDayAverage = ticker.info['twoHundredDayAverage']
+            ativo.fiftyTwoWeekLow = ticker.info['fiftyTwoWeekLow']
+            ativo.fiftyTwoWeekHigh = ticker.info['fiftyTwoWeekHigh']
+
             ativo.save()
+   
             print(f'ativo: {ativo.ativoPrincipal} preco: {ativo.cotacao}')
+            
         except:
-            pass
+            print(f'Erro ao baixar ativo: {ativo.ativoPrincipal}')
     return "Ativos atualizados com sucesso"
