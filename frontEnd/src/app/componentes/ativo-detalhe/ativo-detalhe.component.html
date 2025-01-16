@@ -1,25 +1,71 @@
 <div class="container">
 
-  <mat-grid-list cols="5" rowspan="10" rowHeight="400px">
+  <mat-grid-list cols="5" rowspan="" rowHeight="400px">
 
     <!-- Informacoes basicas -->
-    <mat-grid-tile colspan="2" rowspan="1">
+    <mat-grid-tile colspan="5" rowspan="1">
 
       <mat-card class="example-card" appearance="outlined">
 
         <mat-card-header>
-          <mat-card-title>{{ativo.ativo}}</mat-card-title>
+          <mat-card-title style="font-weight: 600; font-size: 40px; position: relative; left: 30vw;">{{ativo.ativo}}</mat-card-title>
         </mat-card-header>
 
         <mat-card-content>
-          <p>{{ativo.cotacao|currency:'BRL'}}</p>
+          
+          <p style="position: relative; left: 31vw;  font-size: 20px; position: relative; top: 15px;">{{ativo.cotacao|currency:'BRL'}}</p>
+
+          <!-- Status -->
+          @if(ativo.status == 'comprar'){
+          <p style="color: green; position: relative; top: -50px; font-size: 26px ">Status: {{ativo.status}}</p>
+          }
+          @else{
+          <p style=" position: relative; top: -50px; font-size: 26px ">Status: {{ativo.status}}</p>
+          }
+
+          <!-- Meta -->
+          <div class="input-group input-group-sm mb-3" style="position: relative; top: -40px;">
+            Meta Dy :
+            <input type="number" class="form-control" id="meta" aria-label="Amount (to the nearest dollar)"
+              [(ngModel)]="metaDividendYield" (change)="atualizarMetaDividendYield($event,ativo.id)" name="meta"
+              step="0.5" style="text-align: center; width: 75px; position: relative; left: 15px; ">
+            <span class="input-group-text" style=" position: relative; left: 15px;">%</span>
+          </div>
+
+          <!-- Preço Medio -->
+          <div class="input-group input-group-sm mb-3" style="position: relative; top: -40px;">
+            Preco médio : 
+            <input type="number" class="form-control" id="meta" aria-label="Amount (to the nearest dollar)"
+              value="{{ativo.precoMedio}}" (change)="atualizarPrecoMedio($event,ativo.id)" name="meta" step="0.5"
+              style="text-align: center; width: 75px; position: relative; left: 15px; ">
+            <span class="input-group-text" style=" position: relative; left: 15px;">R$</span>
+          </div>
+
         </mat-card-content>
 
         <mat-card-footer class="example-card-footer">
           <mat-chip-set aria-label="Chihuahua traits">
+
+
             <mat-chip>{{ativo.tipo}}</mat-chip>
             <mat-chip>Max(52): {{ativo.fiftyTwoWeekHigh|currency:'BRL'}}</mat-chip>
             <mat-chip>Min(52): {{ativo.fiftyTwoWeekLow|currency:'BRL'}}</mat-chip>
+            <mat-chip>P/L: {{ativo.pl|number:'1.2-2'}}</mat-chip>
+            <mat-chip>Meta: {{ativo.meta}}%</mat-chip>
+            <mat-chip>Dividend Yield: {{ativo.dy|percent:'0.0-2'}}</mat-chip>
+            @if (ativo.tipo == 'Fundo de Investimento') {
+
+            <mat-chip>Score qualitativo {{ativo.scoreQualitativo|number:'0.0-2'}}</mat-chip>
+            }
+            <mat-chip>ValuationDy: {{(ativo.dy*ativo.cotacao/(metaDividendYield/100))|currency:'BRL'}}</mat-chip>
+            <mat-chip>ValuationDFC: {{ativo.valuationDFC|currency:'BRL'}}</mat-chip>
+            <mat-chip>Dividend Yield: {{ativo.dy|percent:'0.0-2'}}</mat-chip>
+            <mat-chip>Crescimento da receita: {{ativo.revenueGrowth|percent:'0.0-2'}}</mat-chip>
+            <mat-chip [ngStyle]="{'color': ativo.freeCashflow < 0 ? 'red' : 'green'}">Fluxo de caixa:
+              {{ativo.freeCashflow|currency:'BRL'}}</mat-chip>
+            <mat-chip>Preço Médio 200 dias: {{ativo.twoHundredDayAverage|currency:'BRL'}}</mat-chip>
+
+
           </mat-chip-set>
         </mat-card-footer>
 
@@ -27,74 +73,16 @@
 
     </mat-grid-tile>
 
-    <!-- Metas -->
-    <mat-grid-tile colspan="1" rowspan="1">
-
-      <mat-card class="example-card" appearance="outlined" style="position: relative; top: 40px;">
-
-        <mat-card-content>
-          <div class="input-group input-group-sm mb-3" style="position: relative; top: 8px;">
-            Meta Dy :
-            <input type="number" class="form-control" id="meta" aria-label="Amount (to the nearest dollar)"
-              [(ngModel)]="metaDividendYield" (change)="atualizarMetaDividendYield($event,ativo.id)" name="meta"
-              step="0.5" style="text-align: center; width: 75px; ">
-            <span class="input-group-text">%</span>
-          </div>
-        </mat-card-content>
-
-      </mat-card>
-
-    </mat-grid-tile>
-
-    <!-- Valuation -->
-    <mat-grid-tile colspan="2" rowspan="1">
-
-      <mat-card class="example-card" appearance="outlined" style="position: relative; top: 40px;">
-
-        <mat-card-content>
-          <p>P/L: {{ativo.pl|number:'1.2-2'}}</p>
-          <p>Meta: {{ativo.meta}}%</p>
-          <p>Dividend Yield: {{ativo.dy|percent:'0.0-2'}}</p>
-          @if(ativo.status == 'comprar'){
-          <p style="color: green;">Status: {{ativo.status}}</p>
-          }
-          @else{
-          <p>Status: {{ativo.status}}</p>
-          }
-          <!-- preco medio -->
-          <div class="input-group input-group-sm mb-3" style="position: relative; top: 8px;">
-            preco médio :
-            <input type="number" class="form-control" id="meta" aria-label="Amount (to the nearest dollar)"
-             value="{{ativo.precoMedio}}" (change)="atualizarPrecoMedio($event,ativo.id)" name="meta" step="0.5"
-              style="text-align: center; width: 75px; ">
-            <span class="input-group-text">R$</span>
-          </div>
-
-          <p>ValuationDy: {{(ativo.dy*ativo.cotacao/(metaDividendYield/100))|currency:'BRL'}}</p>
-          <p>ValuationDFC: {{ativo.valuationDFC|currency:'BRL'}}</p>
-          @if (ativo.tipo == 'Fundo de Investimento') {
-          <p>Score qualitativo {{ativo.scoreQualitativo|number:'0.0-2'}}</p>
-          }
-          <p>Dividend Yield: {{ativo.dy|percent:'0.0-2'}}</p>
-          <p>Crescimento da receita: {{ativo.revenueGrowth|percent:'0.0-2'}}</p>
-          <p [ngStyle]="{'color': ativo.freeCashflow < 0 ? 'red' : 'green'}">Fluxo de caixa: {{ativo.freeCashflow|currency:'BRL'}}</p>
-          <p>Preço Médio 200 dias: {{ativo.twoHundredDayAverage|currency:'BRL'}}</p>
-
-        </mat-card-content>
-
-      </mat-card>
-
-    </mat-grid-tile>
 
 
     <!-- Breve historico da empresa -->
     <mat-grid-tile colspan="5" rowspan="1">
 
-      <mat-card class="example-card" appearance="outlined" style="position: relative; top: 40px;">
+      <mat-card class="example-card" appearance="outlined" style="position: relative; top: -130px;">
 
         <mat-card-content>
           <p>{{ativo.longBusinessSummary}}%</p>
-          
+
         </mat-card-content>
 
       </mat-card>
@@ -106,15 +94,19 @@
   <!-- Aqui vai ficar a tabelaQualitativa filha -->
   <app-tabela-qualitativa [ativoId]="ativoId" [ativo]="ativo"></app-tabela-qualitativa>
   <br>
-  <!-- Comentarios e anotacoes -->
-  <angular-editor [config]="editorConfig" [(ngModel)]="ativo.comentarios">
-    <ng-template #customButtons>
-      <ae-toolbar-set>
-        <ae-button iconClass="fa fa-floppy-o ae-button primary" class="ae-button primary" title="Salvar Texto"
-          (buttonClick)="salvarAnotacoes()"></ae-button>
-      </ae-toolbar-set>
-    </ng-template>
-  </angular-editor>
+
+  <div class="container" style="position: relative; top: -250px;">
+    <!-- Comentarios e anotacoes -->
+    <angular-editor [config]="editorConfig" [(ngModel)]="ativo.comentarios">
+      <ng-template #customButtons>
+        <ae-toolbar-set>
+          <ae-button iconClass="fa fa-floppy-o ae-button primary" class="ae-button primary" title="Salvar Texto"
+            (buttonClick)="salvarAnotacoes()"></ae-button>
+        </ae-toolbar-set>
+      </ng-template>
+    </angular-editor>
+
+  </div>
 
 
 
