@@ -17,27 +17,50 @@ def atualizar_ativos():
 
     ativos = AtivosModels.objects.all()
     for ativo in ativos:
-        try:
 
-            ticker = yf.Ticker(f"{ativo.ativoPrincipal}.SA")
+        try: #AVALIAR SE ESSE TRY É UTIL
 
-            ativo.cotacao = round(ticker.history(period="1d")["Close"].iloc[-1], 2)
-            ativo.longBusinessSummary = ticker.info['longBusinessSummary']
-            ativo.dy = ticker.info['dividendYield']
-            ativo.pl = ticker.info['trailingPE']
-            ativo.enterpriseValue = ticker.info['enterpriseValue']
-            ativo.freeCashflow = ticker.info['freeCashflow']
-            ativo.revenueGrowth = ticker.info['revenueGrowth']
-            ativo.debtToEquity = ticker.info['debtToEquity']
-            ativo.earningsQuarterlyGrowth = ticker.info['earningsQuarterlyGrowth']
-            ativo.twoHundredDayAverage = ticker.info['twoHundredDayAverage']
-            ativo.fiftyTwoWeekLow = ticker.info['fiftyTwoWeekLow']
-            ativo.fiftyTwoWeekHigh = ticker.info['fiftyTwoWeekHigh']
+            if ativo.tipo != 'Tesouro Direto':
 
-            ativo.save()
-   
-            print(f'ativo: {ativo.ativoPrincipal} preco: {ativo.cotacao}')
+                ticker = yf.Ticker(f"{ativo.ativoPrincipal}.SA")
+
+                atributos = {
+                    "longBusinessSummary":"ativo.longBusinessSummary",
+                    "dividendYield":"ativo.dy",
+                    "trailingPE":"ativo.pl",
+                    "enterpriseValue":"ativo.enterpriseValue",
+                    "freeCashflow":"ativo.freeCashflow",
+                    "revenueGrowth":"ativo.revenueGrowth",
+                    "debtToEquity":"ativo.debtToEquity",
+                    "earningsQuarterlyGrowth":"ativo.earningsQuarterlyGrowth",
+                    "twoHundredDayAverage":"ativo.twoHundredDayAverage",
+                    "fiftyTwoWeekLow":"ativo.fiftyTwoWeekLow",
+                    "fiftyTwoWeekHigh":"ativo.fiftyTwoWeekHigh"
+                }
+
+                for key, atributo in atributos.items():
+
+                    try:
+                        valor = ticker.info.get(key)
+                        if valor is not None:
+                            setattr(ativo, key, valor)
+                            # exec(f'{atributo} = {valor}') # exec() é uma forma de fazer atribuicao com dicionario
+                        else:
+                            print(f'{key}: Dado nao encontrado: {ativo.ativoPrincipal}')
+                    except:
+                        print(f'{ativo.tipo}: Dado nao existente: {ativo.ativoPrincipal} key:{key}')
+
+
+                #Forma de atribuir a cotação separado das informações, pois o mais importante é a cotacao
+                ativo.cotacao = round(ticker.history(period="1d")["Close"].iloc[-1], 2)
+                ativo.save()
+                print(f'ativo: {ativo.ativoPrincipal} preco: {ativo.cotacao} salvo.')
+
+            else:
+                print(f'Não há suporte para {ativo.tipo}: {ativo.ativoPrincipal} no momento.')
+
             
         except:
-            print(f'Erro ao baixar ativo: {ativo.ativoPrincipal}')
+            print(f'Erro ao baixar informacoes do ativo: {ativo.ativoPrincipal}')
+    
     return "Ativos atualizados com sucesso"
