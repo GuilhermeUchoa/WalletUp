@@ -36,7 +36,7 @@ def adicionarAtivosDaCarteiraB3ParaPortfolioAppUsuario(request, file):
                     carteira.quantidade = valor['Quantidade'].loc[i]
                     
                     if chave == 'Tesouro Direto':  # Atualizando cotação para Tesouro Direto
-                        carteira.cotacao = float(valor['Valor Atualizado'].loc[i] / valor['Quantidade'].loc[i])
+                        carteira.ativo.cotacao = float(valor['Valor Atualizado'].loc[i] / valor['Quantidade'].loc[i])
                     
                     carteira.save()
                     mensagens.append(f'Ativo {ativo} atualizado')

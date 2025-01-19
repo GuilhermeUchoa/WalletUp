@@ -1,4 +1,3 @@
-
 from . serializers import PortfolioSerializer, AtivosSerializer
 from . b3FileUpload import adicionarAtivosDaCarteiraB3ParaPortfolioAppUsuario
 from . models import PortfolioModels, AtivosModels
@@ -7,6 +6,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters
 from rest_framework.decorators import api_view
 import warnings
+
+
 
 warnings.simplefilter("ignore")
 

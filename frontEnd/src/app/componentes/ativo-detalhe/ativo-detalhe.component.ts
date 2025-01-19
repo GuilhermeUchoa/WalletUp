@@ -21,6 +21,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TabelaQualitativaComponent } from './tabela-qualitativa/tabela-qualitativa.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-ativo-detalhe',
@@ -37,7 +38,8 @@ import { TabelaQualitativaComponent } from './tabela-qualitativa/tabela-qualitat
     MatButtonModule,
     MatCheckboxModule,
     TabelaQualitativaComponent,
-    FormsModule
+    FormsModule,
+    MatTabsModule,
 
   ],
   templateUrl: './ativo-detalhe.component.html',
@@ -64,8 +66,7 @@ export class AtivoDetalheComponent {
 
       this._PortfolioService.getAtivo(ativoId).subscribe((data) => {
         this.ativo = data
-        this.metaDividendYield = data.metaDividendYield 
-        console.log(this.ativo)
+        this.metaDividendYield = data.metaDividendYield
         
       })
     })

@@ -82,18 +82,205 @@
   }
 
 
+  <!-- Aqui vai ficar a tabelaQualitativa filha -->
   @if(ativo.tipo == "Fundo de Investimento"){
-      <!-- Aqui vai ficar a tabelaQualitativa filha -->
-  <app-tabela-qualitativa [ativoId]="ativoId" [ativo]="ativo" style="position: relative; top: 50px;"></app-tabela-qualitativa>
+  <app-tabela-qualitativa [ativoId]="ativoId" [ativo]="ativo"
+    style="position: relative; top: 50px;"></app-tabela-qualitativa>
 
   }
 
+  <!-- Demonstracoes contabeis -->
+  @if(ativo.tipo == "Acoes"){
+  <div class="container" style="position: relative; top: -60px; align-content: center; padding: 160px;">
+
+    <!-- Balanco Patrimonial -->
+    <h4>Balanço Patrimonial - Consolidado</h4>
+    <table style="width: 800px;">
+
+      <thead>
+
+        <tr>
+          <th></th>
+          <th>{{ativo.dataInicial}}</th>
+          <th>{{ativo.dataFinal}}</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        @for(i of ativo.balancoPatrimonial;track $index){
+
+        <tr>
+          <td>{{i.describle}}</td>
+          <td>{{i.value}}</td>
+          <td>{{i.value2}}</td>
+        </tr>
+        }
+
+      </tbody>
+
+    </table>
+    <br>
+
+    <!-- demonstracaoDoResultadoDoExercicio -->
+    <h4>Demonstração do Resultado - Consolidado</h4>
+    <table style="width: 800px;">
+
+      <thead>
+
+        <tr>
+          <th></th>
+          <th>{{ativo.dataInicial}}</th>
+          <th>{{ativo.dataFinal}}</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        @for(i of ativo.demonstracaoDoResultadoDoExercicio;track $index){
+
+        <tr>
+          <td>{{i.describle}}</td>
+          <td>{{i.value}}</td>
+          <td>{{i.value2}}</td>
+        </tr>
+        }
+
+      </tbody>
+
+    </table>
+    <br>
+
+    <!-- demonstracaoDoFluxoDeCaixa -->
+    <h4>Demonstração do Fluxo de Caixa - Consolidado</h4>
+    <table style="width: 800px;">
+
+      <thead>
+
+        <tr>
+          <th></th>
+          <th>{{ativo.dataInicial}}</th>
+          <th>{{ativo.dataFinal}}</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        @for(i of ativo.demonstracaoDoFluxoDeCaixa;track $index){
+
+        <tr>
+          <td>{{i.describle}}</td>
+          <td>{{i.value}}</td>
+          <td>{{i.value2}}</td>
+        </tr>
+        }
+
+      </tbody>
+
+    </table>
+    <br>
 
 
+    <!-- positionShareholders -->
+    <h4>Posição Acionária </h4>
+    <table style="width: 800px;">
+
+      <thead>
+        <tr>
+          <th></th>
+          <th>%On</th>
+          <th>%Pn</th>
+          <th>%Total</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        @for(i of ativo.positionShareholders;track $index){
+
+        <tr>
+          <td>{{i.describle}}</td>
+          <td>{{i.on}}</td>
+          <td>{{i.pn}}</td>
+          <td>{{i.total}}</td>
+        </tr>
+        }
+
+      </tbody>
+
+    </table>
+    <br>
+
+
+
+
+    <!-- freeFloatResult -->
+    <h4>Ações em Circulação no Mercado </h4>
+    <table style="width: 800px;">
+
+      <thead>
+
+        <tr>
+          <th>Tipos de Investidores / Ações</th>
+          <th>Quantidade</th>
+          <th>Percentual</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        @for(i of ativo.freeFloatResult;track $index){
+
+        <tr>
+          <td>{{i.describle}}</td>
+          <td>{{i.value}}</td>
+          <td>{{i.value2}}</td>
+        </tr>
+        }
+
+      </tbody>
+
+    </table>
+    <br>
+
+
+    <!-- capitalStockComposition -->
+    <h4>Composição do Capital Social </h4>
+    <table style="width: 800px;">
+
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        @for(i of ativo.capitalStockComposition;track $index){
+
+        <tr>
+          <td>{{i.describle}}</td>
+          <td>{{i.value}}</td>
+        </tr>
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+  }
 
   @if(ativo.tipo == "Fundo de Investimento"){
 
-  <div class="container"  style="position: relative; top: 155px;">
+  <div class="container" style="position: relative; top: 155px;">
     <!-- Comentarios e anotacoes -->
     <angular-editor [config]="editorConfig" [(ngModel)]="ativo.comentarios">
       <ng-template #customButtons>
@@ -106,7 +293,7 @@
 
   </div>
   }@else {
-  <div class="container"  style="position: relative; top: 40px;">
+  <div class="container" style="position: relative; top: -150px;">
     <!-- Comentarios e anotacoes -->
     <angular-editor [config]="editorConfig" [(ngModel)]="ativo.comentarios">
       <ng-template #customButtons>
@@ -119,7 +306,6 @@
   </div>
 
   }
-
 
 
 </div>

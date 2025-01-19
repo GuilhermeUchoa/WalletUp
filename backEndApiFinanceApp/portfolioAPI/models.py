@@ -32,7 +32,26 @@ class AtivosModels(models.Model):  # Ativos BASE
     fiftyTwoWeekLow = models.FloatField(blank=True, null=True) # Preço mais baixo nos últimos 52 semanas
     fiftyTwoWeekHigh = models.FloatField(blank=True, null=True) # Preço mais alto nos últimos 52 semanas
     longBusinessSummary = models.TextField(blank=True, null=True, default="") # Resumo das atividades da empresa
+
+    ## Demonstrações contabeis
+
+    # Data Inicial e Data Final
+    dataInicial = models.DateField(blank=True, null=True)
+    dataFinal = models.DateField(blank=True, null=True)
+    # Balanço Patrimonial
+    balancoPatrimonial = models.JSONField(blank=True, null=True)
+    # Demonstracao do resultado do exercicio
+    demonstracaoDoResultadoDoExercicio = models.JSONField(blank=True, null=True)
+    # Demonstração do Fluxo de Caixa
+    demonstracaoDoFluxoDeCaixa = models.JSONField(blank=True, null=True)
+    # FreeFloatResult
+    freeFloatResult = models.JSONField(blank=True, null=True)
+    # PositionShareholders
+    positionShareholders = models.JSONField(blank=True, null=True)
+    # CapitalStockComposition
+    capitalStockComposition = models.JSONField(blank=True, null=True)
     
+
     atualizacao = models.DateTimeField(auto_now=True) 
     
     # A task ja esta salvando toda vez que ela roda não é necessaria essa função, somente quando adicionar novo ativo, entao preciso pensar em algo
@@ -86,6 +105,24 @@ class PortfolioModels(models.Model):
     fiftyTwoWeekLow = models.FloatField(blank=True, null=True) # Preço mais baixo nos últimos 52 semanas
     fiftyTwoWeekHigh = models.FloatField(blank=True, null=True) # Preço mais alto nos últimos 52 semanas
     longBusinessSummary = models.TextField(blank=True, null=True, default="") # Resumo das atividades da empresa
+    
+    ## Demonstrações contabeis
+
+    # Data Inicial e Data Final
+    dataInicial = models.DateField(blank=True, null=True)
+    dataFinal = models.DateField(blank=True, null=True)
+    # Balanço Patrimonial
+    balancoPatrimonial = models.JSONField(blank=True, null=True)
+    # Demonstracao do resultado do exercicio
+    demonstracaoDoResultadoDoExercicio = models.JSONField(blank=True, null=True)
+    # Demonstração do Fluxo de Caixa
+    demonstracaoDoFluxoDeCaixa = models.JSONField(blank=True, null=True)
+    # FreeFloatResult
+    freeFloatResult = models.JSONField(blank=True, null=True)
+    # PositionShareholders
+    positionShareholders = models.JSONField(blank=True, null=True)
+    # CapitalStockComposition
+    capitalStockComposition = models.JSONField(blank=True, null=True)
     
     # metas
     meta = models.FloatField(blank=True, null=True)
@@ -147,7 +184,6 @@ class PortfolioModels(models.Model):
         self.scoreQualitativo = self.calculoScoreQualitativo()  # Antes de salvar, calcula o score qualitativo
         self.cotacao = self.ativo.cotacao # ativo é um objeto do tipo AtivosModels
         self.tipo = self.ativo.tipo
-        self.longBusinessSummary = self.ativo.longBusinessSummary
         self.dy = self.ativo.dy
         self.pl = self.ativo.pl
         self.enterpriseValue = self.ativo.enterpriseValue
@@ -158,6 +194,16 @@ class PortfolioModels(models.Model):
         self.twoHundredDayAverage = self.ativo.twoHundredDayAverage
         self.fiftyTwoWeekLow = self.ativo.fiftyTwoWeekLow
         self.fiftyTwoWeekHigh = self.ativo.fiftyTwoWeekHigh
+        self.longBusinessSummary = self.ativo.longBusinessSummary
+        self.dataInicial = self.ativo.dataInicial
+        self.dataFinal = self.ativo.dataFinal
+        self.balancoPatrimonial = self.ativo.balancoPatrimonial
+        self.demonstracaoDoResultadoDoExercicio = self.ativo.demonstracaoDoResultadoDoExercicio
+        self.demonstracaoDoFluxoDeCaixa = self.ativo.demonstracaoDoFluxoDeCaixa
+        self.freeFloatResult = self.ativo.freeFloatResult
+        self.positionShareholders = self.ativo.positionShareholders
+        self.capitalStockComposition = self.ativo.capitalStockComposition
+
 
 
 
@@ -191,6 +237,16 @@ def atualizar_portfolioModels_com_ativosModels(sender, instance, **kwargs):
         portfolio.twoHundredDayAverage = instance.twoHundredDayAverage
         portfolio.fiftyTwoWeekLow = instance.fiftyTwoWeekLow
         portfolio.fiftyTwoWeekHigh = instance.fiftyTwoWeekHigh
+        portfolio.dataInicial = instance.dataInicial
+        portfolio.dataFinal = instance.dataFinal
+        portfolio.balancoPatrimonial = instance.balancoPatrimonial
+        portfolio.demonstracaoDoResultadoDoExercicio = instance.demonstracaoDoResultadoDoExercicio
+        portfolio.demonstracaoDoFluxoDeCaixa = instance.demonstracaoDoFluxoDeCaixa
+        portfolio.freeFloatResult = instance.freeFloatResult
+        portfolio.positionShareholders = instance.positionShareholders
+        portfolio.capitalStockComposition = instance.capitalStockComposition
+    
+
 
         portfolio.save()
 
