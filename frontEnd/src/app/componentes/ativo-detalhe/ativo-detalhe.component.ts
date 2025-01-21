@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PortfolioService } from '../../service/portfolioService/portfolio.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
@@ -23,6 +23,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TabelaQualitativaComponent } from './tabela-qualitativa/tabela-qualitativa.component';
 import {MatTabsModule} from '@angular/material/tabs';
 
+
 @Component({
   selector: 'app-ativo-detalhe',
   standalone: true,
@@ -40,6 +41,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     TabelaQualitativaComponent,
     FormsModule,
     MatTabsModule,
+    RouterModule,
 
   ],
   templateUrl: './ativo-detalhe.component.html',
@@ -67,6 +69,7 @@ export class AtivoDetalheComponent {
       this._PortfolioService.getAtivo(ativoId).subscribe((data) => {
         this.ativo = data
         this.metaDividendYield = data.metaDividendYield
+        console.log(this.ativo)
         
       })
     })

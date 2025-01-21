@@ -99,21 +99,41 @@ def b3BalancosContabeisParaAcoesCrawler(ativoStock: str):
 
     # Balanço Patrimonial - Consolidado, Value2 é o mais recente e Value1 o mais antigo
     balancoPatrimonial = response.json()['consolidated'][0]['results']
+    for item in balancoPatrimonial:
+        item['value'] = item['value'].replace('-','').replace('.', '').replace(',', '.').replace('(','-').replace(')','')
+        item['value2'] = item['value2'].replace('-','').replace('.', '').replace(',', '.').replace('(','-').replace(')','')
 
     # Demonstração do Resultado - Consolidado
     demonstracaoDoResultadoExercicio = response.json()['consolidated'][1]['results']
+    for item in demonstracaoDoResultadoExercicio:
+        item['value'] = item['value'].replace('-','').replace('.', '').replace(',', '.').replace('(','-').replace(')','')
+        item['value2'] = item['value2'].replace('-','').replace('.', '').replace(',', '.').replace('(','-').replace(')','')
 
     # Demonstração do Fluxo de Caixa - Consolidado
     fluxoDeCaixa = response.json()['consolidated'][2]['results']
+    for item in fluxoDeCaixa:
+        item['value'] = item['value'].replace('-','').replace('.', '').replace(',', '.').replace('(','-').replace(')','')
+        item['value2'] = item['value2'].replace('-','').replace('.', '').replace(',', '.').replace('(','-').replace(')','')
 
     # freeFloatResult
     freeFloat = response.json()['freeFloatResult']['results']
+    for item in freeFloat:
+        item['value'] = item['value'].replace('-','').replace('.', '').replace(',', '.').replace('(','-').replace(')','')
+        item['value2'] = item['value2'].replace('-','').replace('.', '').replace(',', '.').replace('(','-').replace(')','')
 
     # positionShareholders
     shareholders = response.json()['positionShareholders']['results']
+    for item in shareholders:
+        item['on'] = item['on'].replace('-','').replace('.', '').replace(',', '.').replace('(','-').replace(')','')
+        item['pn'] = item['pn'].replace('-','').replace('.', '').replace(',', '.').replace('(','-').replace(')','')
+        item['total'] = item['total'].replace('-','').replace('.', '').replace(',', '.').replace('(','-').replace(')','')
 
     # capitalStockComposition
     capitalStockComposition = response.json()['capitalStockComposition']['results']
+    for item in capitalStockComposition:
+        item['value'] = float(item['value'].replace('.', '').replace(',', '.').replace('(','-').replace(')',''))
+  
+    
 
     return dataInicial, dataFinal, balancoPatrimonial, demonstracaoDoResultadoExercicio, fluxoDeCaixa, freeFloat, shareholders, capitalStockComposition
 

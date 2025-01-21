@@ -1,5 +1,8 @@
 <div class="container">
 
+  <button type="button" class="btn btn-light" style="position: fixed; left: 50px;">
+    <img [src]="'../../../../assets/voltar.png'" alt="" title="voltar ao portfolio" [routerLink]="['/portfolio']">
+  </button>
 
   <mat-card class="example-card" appearance="outlined" style="position: relative; top: 25px;">
 
@@ -10,7 +13,7 @@
 
     <mat-card-content>
 
-      <p style="position: relative; left: 31vw;  font-size: 20px; position: relative; top: 15px;">
+      <p style="position: relative; left: 31vw;  font-size: 20px; position: relative; top: 15px; width: 150px;">
         {{ativo.cotacao|currency:'BRL'}}</p>
 
       <!-- Status -->
@@ -103,6 +106,7 @@
           <th></th>
           <th>{{ativo.dataInicial}}</th>
           <th>{{ativo.dataFinal}}</th>
+          <th>Δ</th>
         </tr>
 
       </thead>
@@ -113,8 +117,9 @@
 
         <tr>
           <td>{{i.describle}}</td>
-          <td>{{i.value}}</td>
-          <td>{{i.value2}}</td>
+          <td>{{i.value|currency:'BRL'}}</td>
+          <td>{{i.value2|currency:'BRL'}}</td>
+          <td>{{(i.value/i.value2)-1|percent}}</td>
         </tr>
         }
 
@@ -133,6 +138,7 @@
           <th></th>
           <th>{{ativo.dataInicial}}</th>
           <th>{{ativo.dataFinal}}</th>
+          <th>Δ</th>
         </tr>
 
       </thead>
@@ -143,8 +149,9 @@
 
         <tr>
           <td>{{i.describle}}</td>
-          <td>{{i.value}}</td>
-          <td>{{i.value2}}</td>
+          <td>{{i.value|currency:'BRL'}}</td>
+          <td>{{i.value2|currency:'BRL'}}</td>
+          <td>{{(i.value/i.value2)-1|percent}}</td>
         </tr>
         }
 
@@ -163,6 +170,7 @@
           <th></th>
           <th>{{ativo.dataInicial}}</th>
           <th>{{ativo.dataFinal}}</th>
+          <th>Δ</th>
         </tr>
 
       </thead>
@@ -173,8 +181,9 @@
 
         <tr>
           <td>{{i.describle}}</td>
-          <td>{{i.value}}</td>
-          <td>{{i.value2}}</td>
+          <td>{{i.value|currency:'BRL'}}</td>
+          <td>{{i.value2|currency:'BRL'}}</td>
+          <td>{{(i.value/i.value2)-1|percent}}</td>
         </tr>
         }
 
@@ -191,9 +200,9 @@
       <thead>
         <tr>
           <th></th>
-          <th>%On</th>
-          <th>%Pn</th>
-          <th>%Total</th>
+          <th>ON</th>
+          <th>PN</th>
+          <th>Total</th>
         </tr>
 
       </thead>
@@ -204,9 +213,9 @@
 
         <tr>
           <td>{{i.describle}}</td>
-          <td>{{i.on}}</td>
-          <td>{{i.pn}}</td>
-          <td>{{i.total}}</td>
+          <td>{{i.on/100|percent}}</td>
+          <td>{{i.pn/100|percent}}</td>
+          <td>{{i.total/100|percent}}</td>
         </tr>
         }
 
@@ -238,8 +247,8 @@
 
         <tr>
           <td>{{i.describle}}</td>
-          <td>{{i.value}}</td>
-          <td>{{i.value2}}</td>
+          <td>{{i.value|number}}</td>
+          <td>{{i.value2/100|percent}}</td>
         </tr>
         }
 
@@ -267,7 +276,7 @@
 
         <tr>
           <td>{{i.describle}}</td>
-          <td>{{i.value}}</td>
+          <td>{{i.value|number}}</td>
         </tr>
         }
 
