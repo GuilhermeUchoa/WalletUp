@@ -98,6 +98,7 @@
 
     <!-- Balanco Patrimonial -->
     <h4>Balanço Patrimonial - Consolidado</h4>
+
     <table style="width: 800px;">
 
       <thead>
@@ -113,15 +114,37 @@
 
       <tbody>
 
-        @for(i of ativo.balancoPatrimonial;track $index){
-
         <tr>
-          <td>{{i.describle}}</td>
-          <td>{{i.value|currency:'BRL'}}</td>
-          <td>{{i.value2|currency:'BRL'}}</td>
-          <td>{{(i.value/i.value2)-1|percent}}</td>
+          <td>{{ativo.balancoPatrimonial[0]['describle']}}</td>
+          <td>{{ativo.balancoPatrimonial[0]['value']|currency:'BRL'}}</td>
+          <td>{{ativo.balancoPatrimonial[0]['value2']|currency:'BRL'}}</td>
+          <td>{{(ativo.balancoPatrimonial[0]['value']/ativo.balancoPatrimonial[0]['value2'])-1|percent}}</td>
         </tr>
-        }
+        <tr>
+          <td>{{ativo.balancoPatrimonial[1]['describle']}}</td>
+          <td>{{ativo.balancoPatrimonial[1]['value']|currency:'BRL'}}</td>
+          <td>{{ativo.balancoPatrimonial[1]['value2']|currency:'BRL'}}</td>
+          <td>{{(ativo.balancoPatrimonial[1]['value']/ativo.balancoPatrimonial[1]['value2'])-1|percent}}</td>
+        </tr>
+        <!-- Passivo -->
+        <tr>
+          <td>Passivo Exigivel</td>
+          <td>{{ativo.balancoPatrimonial[1]['value'] - ativo.balancoPatrimonial[2]['value']|currency:'BRL'}}</td>
+          <td>{{ativo.balancoPatrimonial[1]['value2'] - ativo.balancoPatrimonial[2]['value2']|currency:'BRL'}}</td>
+          <td>{{(ativo.balancoPatrimonial[1]['value'] - ativo.balancoPatrimonial[2]['value'])/(ativo.balancoPatrimonial[1]['value2'] - ativo.balancoPatrimonial[2]['value2'])-1|percent}}</td>
+        </tr>
+        <tr>
+          <td>{{ativo.balancoPatrimonial[2]['describle']}}</td>
+          <td>{{ativo.balancoPatrimonial[2]['value']|currency:'BRL'}}</td>
+          <td>{{ativo.balancoPatrimonial[2]['value2']|currency:'BRL'}}</td>
+          <td>{{(ativo.balancoPatrimonial[2]['value']/ativo.balancoPatrimonial[2]['value2'])-1|percent}}</td>
+        </tr>
+        <tr>
+          <td>{{ativo.balancoPatrimonial[3]['describle']}}</td>
+          <td>{{ativo.balancoPatrimonial[3]['value']|currency:'BRL'}}</td>
+          <td>{{ativo.balancoPatrimonial[3]['value2']|currency:'BRL'}}</td>
+          <td>{{(ativo.balancoPatrimonial[3]['value']/ativo.balancoPatrimonial[3]['value2'])-1|percent}}</td>
+        </tr>
 
       </tbody>
 
